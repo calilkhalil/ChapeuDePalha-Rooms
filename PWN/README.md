@@ -91,7 +91,7 @@ echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%s' | nc suspicious-string
 - O uso de `%08x` nos permitiu "andar" pela pilha e ler valores armazenados no stack frame do programa.
 - Ao utilizar `%s`, conseguimos acessar um endereço que apontava para a **flag**, armazenada na memória do programa. Esse endereço foi encontrado na posição 8 da pilha.
 
-![Interpretação dos Valores da Pilha](3.png)
+![Interpretação dos Valores da Pilha](3.png?)
 
 ---
 
