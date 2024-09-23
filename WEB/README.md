@@ -80,9 +80,9 @@ Com as strings prontas, abrimos o navegador e executamos a seguinte requisição
 
 **Saída:**
 
-Como esperado, ambas as strings geraram o mesmo hash MD5, cumprindo as condições impostas pelo código e resultando na exibição da flag.
-
 ![Comparação das strings](3.png)
+
+Como esperado, ambas as strings geraram o mesmo hash MD5, cumprindo as condições impostas pelo código e resultando na exibição da flag.
 
 ---
 
