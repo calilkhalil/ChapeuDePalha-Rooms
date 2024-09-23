@@ -66,7 +66,7 @@ showdiff(a, b)
 
 ![Comparação das strings](2.png)
 
-Essa diferença de um único caractere entre as duas strings não afeta o valor de hash gerado, pois ambas produzem o mesmo hash MD5: `faad49866e9498fc1719f5289e7a0269`.
+Essa diferença de um único caractere entre as duas strings não afeta o valor de hash gerado, pois ambas produzem o mesmo hash MD5:
 
 ![MD5 das strings](1.png)
 
