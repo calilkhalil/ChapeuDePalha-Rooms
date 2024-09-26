@@ -95,3 +95,5 @@ Este desafio envolveu o processo de:
 3. Envio dessas strings para a aplicação, explorando a vulnerabilidade e, assim, obtendo a flag do desafio.
 
 Com o conhecimento sobre a suscetibilidade do MD5 a colisões, foi possível realizar a exploração com sucesso e alcançar o objetivo final.
+
+---
