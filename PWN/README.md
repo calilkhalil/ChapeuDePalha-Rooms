@@ -97,16 +97,11 @@ echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%s' | nc suspicious-string
 
 ## **5. Conclusão**
 
-Aqui está o processo passo a passo que foi seguido para explorar a vulnerabilidade de **format string** e extrair a flag:
+Este desafio envolveu o processo de:
 
-### **Passo 1: Identificação da vulnerabilidade**
+1. Identificação de uma vulnerabilidade de **format string** que permitia a inserção de especificadores de formato não sanitizados.
+2. Inspeção da pilha utilizando o especificador `%08x` para ler valores da memória e identificar variáveis relevantes.
+3. Extração de uma string da memória com o especificador `%s`, resultando na recuperação da flag do desafio.
 
-O código vulnerável permitia a execução de ataques de format string, permitindo que o atacante inserisse especificadores de formato não sanitizados.
+A exploração foi realizada com sucesso ao utilizar essas técnicas para manipular a vulnerabilidade e obter o conteúdo desejado.
 
-### **Passo 2: Inspeção da pilha**
-
-Com o uso do especificador `%08x`, foi possível ler valores da pilha e identificar variáveis e ponteiros temporários.
-
-### **Passo 3: Extração da flag com %s**
-
-Após navegar pela pilha, utilizamos o especificador `%s` para ler uma string armazenada na memória, que acabou sendo a flag do desafio.
