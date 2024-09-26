@@ -88,18 +88,10 @@ Como esperado, ambas as strings geraram o mesmo hash MD5, cumprindo as condiçõ
 
 ## **4. Conclusão**
 
-Aqui está o processo passo a passo que foi seguido para explorar a vulnerabilidade de colisão MD5 e extrair a flag:
+Este desafio envolveu o processo de:
 
-### **Passo 1: Identificação da vulnerabilidade**
+1. Identificação da vulnerabilidade de colisão do MD5.
+2. Geração de duas strings distintas que produziam o mesmo valor de hash devido à fraqueza do algoritmo MD5.
+3. Envio dessas strings para a aplicação, explorando a vulnerabilidade e, assim, obtendo a flag do desafio.
 
-Identificamos que a aplicação utilizava o algoritmo MD5 para comparar duas strings. Sabendo que o MD5 é suscetível a colisões, preparamos duas strings que geravam o mesmo valor de hash, mas eram diferentes entre si.
-
-### **Passo 2: Geração de strings com colisão**
-
-Com base em estudos de colisão MD5, utilizamos duas strings que diferiam por apenas um byte, mas que, devido à vulnerabilidade do MD5, geravam o mesmo valor de hash.
-
-### **Passo 3: Envio das strings para a aplicação**
-
-Enviamos ambas as strings para a aplicação vulnerável através da URL, o que nos permitiu satisfazer as condições impostas pelo código e obter a flag do desafio.
-
----
+Com o conhecimento sobre a suscetibilidade do MD5 a colisões, foi possível realizar a exploração com sucesso e alcançar o objetivo final.
