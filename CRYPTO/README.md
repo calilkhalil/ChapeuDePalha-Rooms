@@ -2,7 +2,7 @@
 # **Crypto**
 
 **Autor**: Hakal  
-**Desafio**: One Cipher 
+**Desafio**: One Cipher  
 **Nível**: Médio  
 
 ---
@@ -214,4 +214,3 @@ Este desafio envolveu o processo de:
 O uso de técnicas de força bruta para encontrar o número correto foi necessário, mas com a compreensão adequada de como a criptografia foi aplicada, a exploração foi conduzida com sucesso, resultando na recuperação da flag.
 
 ---
-
