@@ -105,3 +105,4 @@ Este desafio envolveu o processo de:
 
 A exploração foi realizada com sucesso ao utilizar essas técnicas para manipular a vulnerabilidade e obter o conteúdo desejado.
 
+---
