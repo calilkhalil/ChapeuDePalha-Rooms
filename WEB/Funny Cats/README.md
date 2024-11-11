@@ -16,7 +16,7 @@ Este documento descreve uma exploração bem-sucedida de uma vulnerabilidade Ser
 
 O servidor em questão exibe imagens de gatos e permite que os usuários insiram um nome de gato por meio de uma URL, como no exemplo: `https://funny-cats.chapeudepalhahacker.club/gato?name=Alfredo`. O site não realiza a devida sanitização da entrada do usuário, o que possibilita a exploração através de injeções de template.
 
-A vulnerabilidade SSTI permite que código malicioso seja executado no lado do servidor, o que pode ser explorado para ler arquivos ou executar comandos arbitrários.
+A falta de sanitização adequada da entrada `name` possibilita a exploração via injeção de template. Essa vulnerabilidade permite que atacantes executem código no lado servidor, podendo ler arquivos sensíveis ou executar comandos arbitrários.
 
 ---
 
@@ -58,7 +58,7 @@ O servidor processou a injeção e retornou o resultado da multiplicação, conf
 
 ### **Passo 2: Identificação do Sistema Operacional**
 
-Para avançar na exploração, utilizamos a função `eval` junto com um buffer codificado em base64 para executar um comando que revela o sistema operacional do servidor. O comando utilizado foi `os.platform()`, que nos deu informações sobre a plataforma.
+Com a vulnerabilidade confirmada, o próximo passo foi coletar informações sobre o servidor. Utilizou-se o método `eval` e a função `os.platform()` para identificar o sistema operacional:
 
 **Payload:**
 
@@ -90,7 +90,7 @@ O servidor retornou a plataforma do sistema operacional, confirmando a execuçã
 
 ### **Passo 3: Leitura do Conteúdo de /flag.txt**
 
-A etapa final consistiu em acessar o arquivo `/flag.txt` do servidor. Utilizamos o módulo `child_process` do Node.js para executar o comando `cat /flag.txt` e obter o conteúdo do arquivo. O comando foi codificado em base64 para evitar interferências de filtros de segurança.
+A etapa final consistiu em acessar o arquivo `/flag.txt` do servidor. Utilizamos o módulo `child_process` do Node.js para executar o comando `cat /flag.txt` e obter o conteúdo do arquivo. O comando foi codificado em base64 para evitar interferências.
 
 **Payload:**
 
