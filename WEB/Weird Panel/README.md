@@ -14,7 +14,7 @@ Este write-up aborda a exploração de uma vulnerabilidade de injeção SQL (SQL
 
 ## **2. Identificando a Vulnerabilidade**
 
-Ao acessar o site, encontramos um painel de consulta de nomes e um campo para submissão de queries. 
+Ao acessar o site, encontramos um painel de consulta de nomes e um campo para submissão de queries.
 
 ![Painel](1.png)
 
@@ -22,8 +22,7 @@ A injeção de SQL ocorre quando dados de entrada não são devidamente validado
 
 ![Error-based](2.png)
 
-Conforme a imagem acima, ocorre o erro `Fatal error: Uncaught mysqli_sql_exception:` ao enviar `'`, indicando que a entrada não é tratada de forma adequada.  
-Essa reação expõe detalhes sobre a estrutura do banco e confirma a fragilidade na validação de parâmetros. Isso ocorre porque o uso do apóstrofo `'` no SQL está principalmente relacionado à delimitação de strings, ou seja, ele é utilizado para envolver valores de texto em consultas SQL. Portanto, podemos utilizá-lo pois é possível interromper a consulta SQL.
+Conforme a imagem acima, ocorre o erro `Fatal error: Uncaught mysqli_sql_exception:` ao enviar `'`, indicando que a entrada não é tratada de forma adequada. Essa reação expõe detalhes sobre a estrutura do banco e confirma a fragilidade na validação de parâmetros. Isso ocorre porque o uso do apóstrofo `'` no SQL está principalmente relacionado à delimitação de strings, ou seja, ele é utilizado para envolver valores de texto em consultas SQL. Portanto, podemos utilizá-lo pois é possível interromper a consulta SQL.
 
 ---
 
@@ -43,7 +42,7 @@ Com o navegador aberto, acesse a [URL](https://pt.wikipedia.org/wiki/URL) do ser
 
 Agora, volte ao navegador e efetue uma query qualquer. No caso, utilizamos um nome.
 
-Se você seguiu os passos anteriores, ao efetuar a query, terá um retorno no Burp como este
+Se você seguiu os passos anteriores, ao efetuar a query, terá um retorno no Burp como este:
 
 ![Request](5.png)
 
@@ -75,21 +74,21 @@ sqlmap -r req.req --threads=10 --level 5 --risk 3 --dbs
 
 ![Output SQLMap Cmd](7.png)
 
-Conforme acima poodemos visualizar um databse chamado `ctf`, sendo assim vamos começar a exploração por ele. O próximos passos é enumerar as tabelas e colunas.
+Conforme acima, podemos visualizar um banco de dados chamado `ctf`, sendo assim vamos começar a exploração por ele. O próximo passo é enumerar as tabelas e colunas.
 
 ```bash
 sqlmap -r req.req --threads=10 --level 5 --risk 3 -D ctf --tables
 ```
 
-Aqui seguimos a mesma lógica mas trocamos o `--dbs` por `-D ctf --tables` para especificar o banco de dados `ctf` para exploração e informar ao SQLMap para enumerar as tabelas do banco de dados especificado.
+Aqui seguimos a mesma lógica, mas trocamos o `--dbs` por `-D ctf --tables` para especificar o banco de dados `ctf` para exploração e informar ao SQLMap para enumerar as tabelas do banco de dados especificado.
 
 **Saída:**
 
 ![Output SQLMap Tabelas](8.png)
 
-Agora sabendo que temos duas tabelas sendo: `nomes` e `usuarios`, vamos começar pela tabela de `usuarios` para tentar descobrir alguma forma de obter login na máquina ou site.
+Agora, sabendo que temos duas tabelas: `nomes` e `usuarios`, vamos começar pela tabela de `usuarios` para tentar descobrir alguma forma de obter login na máquina ou site.
 
-Sendo assim trocamos no nosso comando o `--tables` por `-T usuarios --dump-all` para que o SQLMap faça o dump de todas colunas dentro da tabela `usuarios`.
+Sendo assim, trocamos no nosso comando o `--tables` por `-T usuarios --dump-all` para que o SQLMap faça o dump de todas as colunas dentro da tabela `usuarios`.
 
 ```bash
 sqlmap -r req.req --threads=10 --level 5 --risk 3 -D ctf -T usuarios --dump
@@ -99,48 +98,50 @@ sqlmap -r req.req --threads=10 --level 5 --risk 3 -D ctf -T usuarios --dump
 
 ![Output SQLMap admin password](9.png)
 
-Agora nós temos o usuário `administrator` e a senha que foi quebrada apenas aceitando às sugestões do SQLMap. Com essa informação significa que podemos logar no sistema. Sabendo que se trata de um serviço `WEB`, podemos executar ataques de força bruta para saber quais os nomes podem ser os do diretório para login.
+Agora nós temos o usuário `administrator` e a senha que foi quebrada apenas aceitando as sugestões do SQLMap. Com essa informação, significa que podemos logar no sistema. Sabendo que se trata de um serviço `WEB`, podemos executar ataques de força bruta para saber quais os nomes podem ser os do diretório para login.
 
 ---
 
 ## **4. Descobrindo Diretórios**
 
-Para descobrir o diretório que hospedava o login vamos usar uma ferramenta chamda [feroxbuster](https://github.com/epi052/feroxbuster). Basicamente é uma ferramenta de código aberto, escrita em Rust, usada para força bruta de diretórios e arquivos em servidores web. Ele é projetado para ser rápido, eficiente e fácil de usar, ajudando em atividades de reconhecimento durante testes de segurança, como no contexto de pentests ou red teaming.
+Para descobrir o diretório que hospedava o login, vamos usar uma ferramenta chamada [feroxbuster](https://github.com/epi052/feroxbuster). Basicamente, é uma ferramenta de código aberto, escrita em Rust, usada para força bruta de diretórios e arquivos em servidores web. Ele é projetado para ser rápido, eficiente e fácil de usar, ajudando em atividades de reconhecimento durante testes de segurança, como no contexto de pentests ou red teaming.
 
-Para utilizala é bem fácil, basta especificar o `host` e a `wordlist` que ela vai começar a tentar acessar toda lista de palavra e retornar apenas códigos HTTP's coerentes e válidos para acesso.
+Para utilizá-la é bem fácil, basta especificar o `host` e a `wordlist` que ela vai começar a tentar acessar toda lista de palavras e retornar apenas códigos HTTP coerentes e válidos para acesso.
 
 ```bash
 feroxbuster -u https://weird-panel.chapeudepalhahacker.club/ -w /usr/share/seclists/Discovery/Web-Content/big.txt -t150
 ```
 
-Para nosso contexto o comando acima vai resolver.
+Para nosso contexto, o comando acima vai resolver.
 
 #### **Explicação dos Parâmetros:**
 
-- `-u` Especifica a URL alvo.
-- `-w` Indica a wordlista que será utilizada no processo
-- `-t150` Configura a quantidade de threads a ser utilizada.
+- `-u`: Especifica a URL alvo.
+- `-w`: Indica a wordlist que será utilizada no processo.
+- `-t150`: Configura a quantidade de threads a ser utilizada.
 
 **Saída:**
 
 ![Output Feroxbuster](10.png)
 
-Como evidenciado acima, sabemos que o caminho para login é `/admin` sendo assim, vamos utilizar as credencias anteriormente obtidas e efetuar login no painel.
+Como evidenciado acima, sabemos que o caminho para login é `/admin`, sendo assim, vamos utilizar as credenciais anteriormente obtidas e efetuar login no painel.
 
 ---
 
 ## **5. Obtendo a Flag**
 
-Nessa último etapa foi bem fácil, visto que o usuário é `administrador` a senha `123321123` e o formulário de login está localizado no endereço `https://weird-panel.chapeudepalhahacker.club/admin`.
+Nessa última etapa foi bem fácil, visto que o usuário é `administrator` e a senha `123321123`, e o formulário de login está localizado no endereço `https://weird-panel.chapeudepalhahacker.club/admin`.
 
-Acessando o site o formulário é requisitado conforme abaixo:
+Acessando o site, o formulário é requisitado conforme abaixo:
 
 ![Login Page](11.png)
 
-Ao inserir o usuário e senha obtemos a flag.
+Ao inserir o usuário e senha, obtemos a flag.
 
 ![Flag](12.png)
 
 ---
 
 ## **6. Conclusão**
+
+Neste write-up, demonstramos como uma vulnerabilidade de injeção SQL pode ser explorada para obter acesso a informações sensíveis e, eventualmente, a flag de um sistema-alvo. A exploração foi realizada em várias etapas, desde a identificação da vulnerabilidade até a obtenção da flag. Este estudo destaca a importância de validar e sanitizar corretamente as entradas dos usuários para prevenir vulnerabilidades de injeção SQL em aplicações web. Além disso, ferramentas como Burp Suite, SQLMap e feroxbuster foram essenciais para automatizar e facilitar o processo de exploração. A segurança de aplicações web deve ser uma prioridade para evitar que falhas como essa sejam exploradas por atacantes mal-intencionados.
