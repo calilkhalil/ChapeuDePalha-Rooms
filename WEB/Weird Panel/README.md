@@ -75,7 +75,7 @@ sqlmap -r req.req --threads=10 --level 5 --risk 3 --dbs
 
 ![Output SQLMap Cmd](7.png)
 
-Conforme acima poodemos viausilzar um databse chamado `ctf`, sendo assim vamos começar a exploração por ele. O próximos passos é enumerar as tabelas e colunas.
+Conforme acima poodemos visualizar um databse chamado `ctf`, sendo assim vamos começar a exploração por ele. O próximos passos é enumerar as tabelas e colunas.
 
 ```bash
 sqlmap -r req.req --threads=10 --level 5 --risk 3 -D ctf --tables
@@ -87,4 +87,60 @@ Aqui seguimos a mesma lógica mas trocamos o `--dbs` por `-D ctf --tables` para 
 
 ![Output SQLMap Tabelas](8.png)
 
-Agora sabendo que temos duas tabelas sendo: `nomes` e `usuarios`, vamos começar pela usuarios para tentar descobrir alguma forma de obter login na máquina ou site.
+Agora sabendo que temos duas tabelas sendo: `nomes` e `usuarios`, vamos começar pela tabela de `usuarios` para tentar descobrir alguma forma de obter login na máquina ou site.
+
+Sendo assim trocamos no nosso comando o `--tables` por `-T usuarios --dump-all` para que o SQLMap faça o dump de todas colunas dentro da tabela `usuarios`.
+
+```bash
+sqlmap -r req.req --threads=10 --level 5 --risk 3 -D ctf -T usuarios --dump
+```
+
+**Saída:**
+
+![Output SQLMap admin password](9.png)
+
+Agora nós temos o usuário `administrator` e a senha que foi quebrada apenas aceitando às sugestões do SQLMap. Com essa informação significa que podemos logar no sistema. Sabendo que se trata de um serviço `WEB`, podemos executar ataques de força bruta para saber quais os nomes podem ser os do diretório para login.
+
+---
+
+## **4. Descobrindo Diretórios**
+
+Para descobrir o diretório que hospedava o login vamos usar uma ferramenta chamda [feroxbuster](https://github.com/epi052/feroxbuster). Basicamente é uma ferramenta de código aberto, escrita em Rust, usada para força bruta de diretórios e arquivos em servidores web. Ele é projetado para ser rápido, eficiente e fácil de usar, ajudando em atividades de reconhecimento durante testes de segurança, como no contexto de pentests ou red teaming.
+
+Para utilizala é bem fácil, basta especificar o `host` e a `wordlist` que ela vai começar a tentar acessar toda lista de palavra e retornar apenas códigos HTTP's coerentes e válidos para acesso.
+
+```bash
+feroxbuster -u https://weird-panel.chapeudepalhahacker.club/ -w /usr/share/seclists/Discovery/Web-Content/big.txt -t150
+```
+
+Para nosso contexto o comando acima vai resolver.
+
+#### **Explicação dos Parâmetros:**
+
+- `-u` Especifica a URL alvo.
+- `-w` Indica a wordlista que será utilizada no processo
+- `-t150` Configura a quantidade de threads a ser utilizada.
+
+**Saída:**
+
+![Output Feroxbuster](10.png)
+
+Como evidenciado acima, sabemos que o caminho para login é `/admin` sendo assim, vamos utilizar as credencias anteriormente obtidas e efetuar login no painel.
+
+---
+
+## **5. Obtendo a Flag**
+
+Nessa último etapa foi bem fácil, visto que o usuário é `administrador` a senha `123321123` e o formulário de login está localizado no endereço `https://weird-panel.chapeudepalhahacker.club/admin`.
+
+Acessando o site o formulário é requisitado conforme abaixo:
+
+![Login Page](11.png)
+
+Ao inserir o usuário e senha obtemos a flag.
+
+![Flag](12.png)
+
+---
+
+## **6. Conclusão**
