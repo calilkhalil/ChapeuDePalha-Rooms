@@ -30,9 +30,9 @@ hexyl something.bin | head -n 2
 
 **Análise:**
 
+- A sequência `0c 94` remete a opcodes de arquiteturas AVR, indicando possível uso de um microcontrolador.
 - Os valores iniciais (`0c 94 5d 00 0c 94 85 00`) sugerem instruções típicas de firmware para microcontroladores
 - A ausência de caracteres ASCII legíveis após os primeiros bytes reforça a ideia de se tratar de código de máquina. (`_×]0_××0`)
-- A sequência `0c 94` remete a opcodes de arquiteturas AVR, indicando possível uso de um microcontrolador.
 
 ---
 
