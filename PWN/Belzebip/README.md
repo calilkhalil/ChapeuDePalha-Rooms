@@ -87,7 +87,7 @@ Removendo tudo e deixando apenas a sequência binária (`0/1`) vamos ter no tota
 
 ![VSCode Clean](6.png)
 
-Agora copiando todo esse conteúdo podemos tentar colocar em um Binary String Decoder e tentar tornar o conteúdo dessa sequência legível.
+Agora copiando todo esse conteúdo podemos tentar colocar em um Binary String Decoder e tornar o conteúdo dessa sequência legível.
 
 Para esse caso, vou utilizar o [CyberChef](https://gchq.github.io/CyberChef/), ferramenta já utilizada em outros Write-Ups. Gosto dela pela praticidade e facilidade.
 
