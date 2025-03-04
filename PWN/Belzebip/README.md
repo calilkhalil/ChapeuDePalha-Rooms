@@ -101,7 +101,7 @@ Agora vamos selecionar a receita no canto superior esquerdo `From Binary` e auto
 
 ## **7. Conclusão**
 
-O arquivo `something.bin` apresenta instruções típicas de microcontroladores AVR, como o ATmega328P, utilizado em diversos projetos de sistemas embarcados. A decompilação permitiu identificar rotinas de inicialização de hardware (timers e I/O) e um loop principal que controla uma sensação de “bips” ou alternância de sinais binários.
+O arquivo `something.bin` apresenta instruções típicas de microcontroladores AVR, no caso o ATmega328P, utilizado em diversos projetos de sistemas embarcados. A decompilação permitiu identificar rotinas de inicialização de hardware (timers e I/O) e um loop principal que controla uma sensação de “bips” ou alternância de sinais binários.
 
 **Principais Aprendizados:**
 
@@ -109,13 +109,11 @@ O arquivo `something.bin` apresenta instruções típicas de microcontroladores 
 - Processo de decompilação ajustado à arquitetura, utilizando ferramentas especializadas (Binary Ninja, Ghidra).
 - Geração de sequências de 0s e 1s como método de controle de periféricos ou como “esconder” informações que, quando extraídas e decodificadas, podem revelar dados relevantes (como uma flag ou mensagem).
 
-**Recomendações Finais:**
+**Sugestões de Aprendizado:**
 
 - Investigar as bibliotecas usadas na construção do firmware (por exemplo, `<avr/io.h>`).
 - Explorar métodos de configuração de timers e interrupções em microcontroladores AVR.
 - Analisar se as rotinas identificadas podem ser aplicadas a outros ambientes (como simulação no Proteus ou emuladores de AVR).
 - Pesquisar metodologias de Engenharia Reversa em ambientes embarcados, incluindo decodificação de padrões binários que podem conter flags ou mensagens ocultas.
-
-Dessa forma, o binário estudado mostra-se como um **exemplo prático de engenharia reversa** em sistemas embarcados, ilustrando como analisar estrutura, códigos de inicialização e possíveis dados escondidos em rotinas de I/O.
 
 ---
