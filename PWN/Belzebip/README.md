@@ -93,7 +93,7 @@ Copiando todo conteúdo no input certifico que contém 240 linhas, exatamente a 
 
 ![CyberChef Input](7.png)
 
-Agora vamos selecionar a receita no canto superior esquerdo `From Binary` e tá aí, a flag decodificada da sequência de binários.
+Agora vamos selecionar a receita no canto superior esquerdo `From Binary` e automaticamente a flag é decodificada da sequência de binários.
 
 ![CyberChef Decode with Flag](8.png)
 
