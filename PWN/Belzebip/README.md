@@ -1,7 +1,7 @@
 # **PWN**
 
 **Autor**: Hakal  
-**Desafio**: Belzebip
+**Desafio**: Belzebip  
 **Nível**: Médio  
 
 ---
@@ -73,6 +73,8 @@ Analisando cada função de forma singular e detalhadamente, encontrei a funçã
 ![BinaryNinja I/O](4.png)
 
 No loop principal (`0x632-0xdd6`) tem uma sequência extremamente longa (por volta de 200 chamadas) para a função `sub_10e` com padrões de binário (`0,1,0,0...`) sendo um possível padrão de LEDs piscando em uma ordem específica, comunicação serial bit-bang ou até mesmo controle de motores/atuadores.
+
+---
 
 ## **6. Extraindo as Chamadas**
 
