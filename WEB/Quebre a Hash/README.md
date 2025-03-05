@@ -1,3 +1,4 @@
+
 # **WEB**
 
 **Autor**: Hakal  
@@ -97,3 +98,4 @@ Este desafio envolveu o processo de:
 Com o conhecimento sobre a suscetibilidade do MD5 a colisões, foi possível realizar a exploração com sucesso e alcançar o objetivo final.
 
 ---
+
