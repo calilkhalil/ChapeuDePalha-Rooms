@@ -77,4 +77,3 @@ Assim que concluir o login, a flag ficará visível no próprio banner do servi�
 A técnica empregada consiste em um ataque simples de força bruta, válido somente em contextos autorizados. Revise logs e policie portas para mitigar ataques em produção. Aqui, a descoberta da senha finaliza o desafio, garantindo acesso ao banner com a flag.
 
 ---
-
