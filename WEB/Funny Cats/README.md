@@ -1,3 +1,4 @@
+
 # **WEB**
 
 **Autor**: Hakal  
@@ -8,13 +9,13 @@
 
 ## **1. Introdução**
 
-Este documento descreve uma exploração bem-sucedida de uma vulnerabilidade Server-Side Template Injection (SSTI) em um servidor Express, com o objetivo de acessar a flag escondida no arquivo `/flag.txt`. A vulnerabilidade ocorre devido ao processamento inadequado de entradas de usuários, permitindo a execução de código arbitrário no servidor.
+Este documento descreve uma exploração bem-sucedida de uma vulnerabilidade Server-Side Template Injection (SSTI) em um servidor Express, visando acessar a flag escondida no arquivo `/flag.txt`. A vulnerabilidade ocorre devido ao processamento inadequado de entradas de usuários, permitindo a execução de código arbitrário no servidor.
 
 ---
 
 ## **2. Análise do Código Vulnerável**
 
-O servidor em questão exibe imagens de gatos e permite que os usuários insiram um nome de gato por meio de uma URL, como no exemplo: `https://funny-cats.chapeudepalhahacker.club/gato?name=Alfredo`. O site não realiza a devida sanitização da entrada do usuário, o que possibilita a exploração através de injeções de template.
+O servidor em questão exibe imagens de gatos e permite que os usuários instituam um nome de gato por meio de uma URL, como no exemplo: `https://funny-cats.chapeudepalhahacker.club/gato?name=Alfredo`. O site não realiza a devida sanitização da entrada do usuário, o que possibilita a exploração mediante injeções de template.
 
 A falta de sanitização adequada da entrada `name` possibilita a exploração via injeção de template. Essa vulnerabilidade permite que atacantes executem código no lado servidor, podendo ler arquivos sensíveis ou executar comandos arbitrários.
 
@@ -58,7 +59,7 @@ O servidor processou a injeção e retornou o resultado da multiplicação, conf
 
 ### **Passo 2: Identificação do Sistema Operacional**
 
-Com a vulnerabilidade confirmada, o próximo passo foi coletar informações sobre o servidor. Utilizou-se o método `eval` e a função `os.platform()` para identificar o sistema operacional:
+Com a vulnerabilidade confirmada, o próximo passo foi coletar informações sobre o servidor. Utiliza-se o método `eval` e a função `os.platform()` para identificar o sistema operacional:
 
 **Payload:**
 
@@ -84,7 +85,7 @@ view-source:https://funny-cats.chapeudepalhahacker.club/gato?name=%3C%25%3D%20'-
 
 **Resultado:**
 
-O servidor retornou a plataforma do sistema operacional, confirmando a execução do comando.
+O servidor retornou à plataforma do sistema operacional, confirmando a execução do comando.
 
 ![Identificação do Sistema Operacional](2.png)
 
