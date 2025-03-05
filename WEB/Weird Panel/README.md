@@ -1,3 +1,4 @@
+
 # **WEB**
 
 **Autor**: Hakal  
@@ -22,7 +23,7 @@ A injeção de SQL ocorre quando dados de entrada não são devidamente validado
 
 ![Error-based](2.png)
 
-Conforme a imagem acima, ocorre o erro `Fatal error: Uncaught mysqli_sql_exception:` ao enviar `'`, indicando que a entrada não é tratada de forma adequada. Essa reação expõe detalhes sobre a estrutura do banco e confirma a fragilidade na validação de parâmetros. Isso ocorre porque o uso do apóstrofo `'` no SQL está principalmente relacionado à delimitação de strings, ou seja, ele é utilizado para envolver valores de texto em consultas SQL. Portanto, podemos utilizá-lo pois é possível interromper a consulta SQL.
+Conforme a imagem acima, ocorre o erro `Fatal error: Uncaught mysqli_sql_exception:` ao enviar `'`, indicando que a entrada não é tratada de forma adequada. Essa reação expõe detalhes sobre a estrutura do banco e confirma a fragilidade na validação de parâmetros. Isso ocorre porque o uso do apóstrofo `'` no SQL está principalmente relacionado à delimitação de strings, ou seja, ele é utilizado para envolver valores de texto em consultas SQL. Portanto, podemos utilizá-lo, pois é possível interromper a consulta SQL.
 
 ---
 
@@ -48,7 +49,7 @@ Se você seguiu os passos anteriores, ao efetuar a query, terá um retorno no Bu
 
 Com essa requisição interceptada, podemos salvá-la como um objeto para utilizar nos próximos passos. Nossa intenção é usar essa requisição para ferramentas automatizadas de SQLi, em vez de enumerar tudo manualmente.
 
-Clique em `Action` e selecione a opção `Save item`. Então ela abrirá uma tela de confirmação e pedirá para você escolher o diretório.
+Clique em `Action` e selecione a opção `Save item`. Então, ela abrirá uma tela de confirmação e pedirá para você escolher o diretório.
 
 ![Saving item](6.png)
 
@@ -74,7 +75,7 @@ sqlmap -r req.req --threads=10 --level 5 --risk 3 --dbs
 
 ![Output SQLMap Cmd](7.png)
 
-Conforme acima, podemos visualizar um banco de dados chamado `ctf`, sendo assim vamos começar a exploração por ele. O próximo passo é enumerar as tabelas e colunas.
+Conforme acima, podemos visualizar um banco de dados chamado `ctf`, sendo assim vamos começar a explorar por ele. O próximo passo é enumerar as tabelas e colunas.
 
 ```bash
 sqlmap -r req.req --threads=10 --level 5 --risk 3 -D ctf --tables
@@ -98,7 +99,7 @@ sqlmap -r req.req --threads=10 --level 5 --risk 3 -D ctf -T usuarios --dump
 
 ![Output SQLMap admin password](9.png)
 
-Agora nós temos o usuário `administrator` e a senha que foi quebrada apenas aceitando as sugestões do SQLMap. Com essa informação, significa que podemos logar no sistema. Sabendo que se trata de um serviço `WEB`, podemos executar ataques de força bruta para saber quais os nomes podem ser os do diretório para login.
+Agora nós temos o usuário `administrator` e a senha quebrada, apenas aceitando as sugestões do SQLMap. Com essa informação, significa que podemos entrar no sistema. Sabendo que se trata de um serviço `WEB`, podemos executar ataques de força bruta para saber quais os nomes podem ser os do diretório para login.
 
 ---
 
@@ -145,3 +146,5 @@ Ao inserir o usuário e senha, obtemos a flag.
 ## **6. Conclusão**
 
 Neste write-up, demonstramos como uma vulnerabilidade de injeção SQL pode ser explorada para obter acesso a informações sensíveis e, eventualmente, a flag de um sistema-alvo. A exploração foi realizada em várias etapas, desde a identificação da vulnerabilidade até a obtenção da flag. Este estudo destaca a importância de validar e sanitizar corretamente as entradas dos usuários para prevenir vulnerabilidades de injeção SQL em aplicações web. Além disso, ferramentas como Burp Suite, SQLMap e feroxbuster foram essenciais para automatizar e facilitar o processo de exploração. A segurança de aplicações web deve ser uma prioridade para evitar que falhas como essa sejam exploradas por atacantes mal-intencionados.
+
+---
