@@ -49,7 +49,7 @@ echo -e '%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x' | nc suspicious-strings.chapeu
 
 ### **Passo 2: Acessando strings na memória com %s**
 
-Depois de ler os valores da pilha, a próxima etapa foi tentar acessar uma **string** que poderia estar armazenada na memória. Para isso, utilizamos o especificador `%s`, que tenta interpretar um valor na pilha como um ponteiro para uma string.
+Após ler os valores da pilha, a próxima etapa foi tentar acessar uma **string** que poderia estar armazenada na memória. Para isso, utilizamos o especificador `%s`, que tenta interpretar um valor na pilha como um ponteiro para uma string.
 
 Utilizamos o seguinte comando:
 
@@ -106,3 +106,4 @@ Este desafio envolveu o processo de:
 A exploração foi realizada com sucesso ao utilizar essas técnicas para manipular a vulnerabilidade e obter o conteúdo desejado.
 
 ---
+
