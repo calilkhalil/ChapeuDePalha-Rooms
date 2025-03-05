@@ -8,7 +8,7 @@
 
 ## **1. Introdução**
 
-Neste write-up, documentaremos o processo completo de decodificação de uma string codificada em Base64 e criptografada usando uma técnica de **XOR** com uma chave fornecida e um número aleatório. A criptografia foi implementada em várias camadas, sendo finalizada com codificação em Base64. O objetivo final é reverter o processo de criptografia para recuperar a **flag** escondida.
+Neste write-up, documentaremos o processo completo de decodificação de uma string codificada em Base64 e criptografada usando uma técnica de **XOR** com uma chave fornecida e um número aleatório. A criptografia foi implementada em várias camadas, finalizada com codificação em Base64. O objetivo final é reverter o processo de criptografia para recuperar a **flag** escondida.
 
 Este desafio exige conhecimento sobre criptografia simétrica, manipulação de strings e técnicas de XOR, e na minha opinião se encaixa no nível **médio** de dificuldade.
 
@@ -66,7 +66,7 @@ A primeira etapa foi decodificar a string codificada em Base64. Aqui está a str
 4YSd4YWZ4YSJ4YSD4YWG4YSE4YS/4YWf4YSF4YWW4YWr4YSF4YW24YSB4YWU4YWE4YWj4YWH4YWW4YSC4YWq4YSE4YWS4YSl4YWx4YWx4YW1
 ```
 
-Utilizamos um binário de decodificação de Base64, e o resultado foi a seguinte string criptografada, com caracteres não legíveis:
+Utilizamos um binário de decodificação de Base64, e o resultado foi a seguinte string criptografada, com caracteres ilegíveis:
 
 
 ```bash
@@ -81,7 +81,7 @@ echo '4YSd4YWZ4YSJ4YSD4YWG4YSE4YS/4YWf4YSF4YWW4YWr4YSF4YW24YSB4YWU4YWE4YWj4YWH4Y
 
 ### **Passo 2: Reversão do XOR com o número aleatório**
 
-Sabemos que o próximo passo na criptografia envolveu aplicar um XOR entre a string e um número aleatório, que foi elevado ao quadrado. O número aleatório foi gerado entre 1 e 100. Para reverter isso, fizemos uma busca exaustiva, testando cada número ao quadrado entre 1² e 100².
+Sabemos que o próximo passo na criptografia envolveu aplicar um XOR entre a string e um número aleatório, elevado ao quadrado. O número aleatório foi gerado entre 1 e 100. Para reverter isso, fizemos uma busca exaustiva, testando cada número ao quadrado entre 1² e 100².
 
 A lógica por trás desse passo foi tentar cada número e verificar se o resultado gerava uma string legível. O código para reverter essa operação de XOR foi o seguinte:
 
@@ -133,7 +133,7 @@ def decrypt_text(encrypted_text, key):
     return decrypted_text[::-1]  # Reverter o texto, pois ele foi invertido na criptografia
 ```
 
-Finalmente, agora que entendemos todo o proceso, conseguimos reverter o texto completamente com um código em python customizado e encontrar a **flag**.
+Finalmente, agora que entendemos todo o processo, conseguimos reverter o texto completamente com um código em Python customizado e encontrar a **flag**.
 
 ```python
 import base64
@@ -213,3 +213,4 @@ Este desafio envolveu o processo de:
 O uso de técnicas de força bruta para encontrar o número correto foi necessário, mas com a compreensão adequada de como a criptografia foi aplicada, a exploração foi conduzida com sucesso, resultando na recuperação da flag.
 
 ---
+

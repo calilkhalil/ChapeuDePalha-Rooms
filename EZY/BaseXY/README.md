@@ -21,7 +21,7 @@ A string `IZGECR33GBXDGX2QGEZWGM27OIZTI3DMPFPTG6BRORZSC7I=` tem características
 
 1. **Caracteres válidos**: A-Z, 2-7 e o caractere `=` (usado como padding).  
 2. **Comprimento**: 56 caracteres (múltiplo de 8, incluindo padding).  
-3. **Padding**: O caractere `=` ao final, comum em codificações BaseXX.
+3. **Padding**: O caractere `=` ao final, comum em codificações BaseXY.
 
 ---
 
@@ -58,7 +58,7 @@ echo "IZGECR33GBXDGX2QGEZWGM27OIZTI3DMPFPTG6BRORZSC7I=" | base32 -d
 
 **Lições aprendidas**:  
 1. Uso de ferramentas online (CyberChef) e do terminal para decodificação e validação.  
-2. Observação da presença de padding e caracteres válidos em codificações BaseXX.
+2. Observação da presença de padding e caracteres válidos em codificações BaseXY.
 
 **Recomendações de segurança**:  
 - Entender que codificação (Base32/64) não é criptografia.  
